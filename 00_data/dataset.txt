@@ -1,0 +1,5 @@
+GCA_943734735.2	Anopheles gambiae	Anogam
+GCA_015732765.1	Culex quinquefasciatus	Culqui
+GCA_002204515.1	Aedes aegypti	        Aedaeg
+GCA_035046485.1	Aedes albopictus	Aedalb
+GCA_943734655.2	Sabethes cyaneus	Sabcya
