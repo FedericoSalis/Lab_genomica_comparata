@@ -1,5 +1,5 @@
 ```
- for gff in *.gff; do agat_sp_keep_longest_isoform.pl --gff "$gff" -o ${gff/.gff_longest.gff}; done
+ for gff in *.gff; do agat_sp_keep_longest_isoform.pl --gff "$gff" -o ${gff/.gff/_longest.gff}; done
 ```
 
 
@@ -9,7 +9,7 @@ sed 's/NC_XXX/chr1/'
 
 
 ```
-for gff in *_longest.gff; do agat_sp_extract_sequances.pl -g "$gff" -f <PATH>${gff/_longest.gff/.fna} -t cds -p --cfs --output <PATH>${gff/_longest.gff/.faa}; done
+for gff in *_longest.gff; do agat_sp_extract_sequances.pl -g "$gff" -f <PATH/00genome>${gff/_longest.gff/.fna} -t cds -p --cfs --output <PATH/02>${gff/_longest.gff/.faa}; done
 ```
 
 In 02_proteom
