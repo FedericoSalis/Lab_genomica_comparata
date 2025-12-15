@@ -24,13 +24,13 @@ poi li rimuoviamo dal file che vogliamo utilizzare per analisi
 find . -size 0 -delete
 ```
 
-Disco split con script di Mirko (dentro 01_Disco),  
+Disco split con script di Mirko (dentro 01_Disco, filtra i paraloghi), 
 
 ```
 bash /home/PERSONALE/mirko.martini3/Lab_CompGeno/00_practice/99_scripts/split_disco_output.sh /home/STUDENTI/federico.salis/Lab_genomica_comparata/05_OG.Inference_Phylogenomic/00_OrthoFinder/Results_Dec01/Orthogroup_Sequence
 ```
 
-#Allineamento e trimming
+#Allineamento e trimming per costruzione alberi
 
 Noi vogliamo studiare espansione e contrazione famiglie geniche. Usiamo cafe per conoscere numerosità e ripartizione famiglie geniche nelle varie specie e ci dice se differenze in queste contrazioni/espansioni sono significative. Ci serve tabella e time tree. Dobbiamo creare albero e calibrarlo, per farlo uso i sengle copy complete, se ci mancassero cercheremmmo tra i risultati di DISCO, se non li trovassimo neanche li accetteremmo di avviare l'analisi con specie in meno.
 
@@ -40,12 +40,16 @@ Da 00_OrthoFinder/Results_Dec01/Single_Copy_Orthologue_Sequences estraiamo rando
 ls | shuf -n 200 > species_tree_OG.txt
 ```
 
+comando di allenamento
+
 ```
 for OG in $(cat species_tree_OG.txt); do mafft --auto --anysymbol "$OG" > ../../../03_aligned/${OG/.fa/_aligned.faa} ; done
 ```
 
+trimming
+
 ```
-for OG in *; do bmge -i "$OG" -t AA -m BLOSUM62 -e 0.5 -g 0.4 -of ../04_trimmed/${OG/_aligned:faa/_trimmed.faa}; done
+for OG in *; do bmge -i "$OG" -t AA -m BLOSUM62 -e 0.5 -g 0.4 -of ../04_trimmed/${OG/_aligned.faa/_trimmed.faa}; done
 ```
 
 per far funzionare AMAS abbiamo bisogno di avere solo il nome, senza ciò che segue la pipe
@@ -70,11 +74,9 @@ iqtree -m TESTNEW -b 100 -s conc_species_tree --prefix species_tree -nt 9
 Ora dobbaimo fare (in 02_) l'allineamento e il trimming di tutti i disco (non gli alberi)
 
 ```
-
+for file in *faa; do mafft --auto --anysymbol "$file" > ../03_aligned/prova/$file/ da completareeeefguyewg7ofiuwehaoiruc9o4muweirghweriogvhjewio
 ```
 
 
-
-#Paralog filtering 
 
 
