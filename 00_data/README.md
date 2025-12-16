@@ -1,28 +1,30 @@
+Date diverse isoforme di una proteina (dipendenti da diverso splicing) scegliamo di mantanere tra le varie isoforme quella più lunga
+
+Ricerca dell'isoforma più lunga
+
 ```
  for gff in *.gff; do agat_sp_keep_longest_isoform.pl --gff "$gff" -o ${gff/.gff/_longest.gff}; done
 ```
-
-Non fatto
-```
-sed 's/NC_XXX/chr1/'
-```
-
+Estrazione sequenza più lunga in formato .faa
 
 ```
 for gff in *_longest.gff; do agat_sp_extract_sequences.pl -g "$gff" -f ../00_genome/${gff/_longest.gff/.fna} -t cds -p --cfs --output ../02_raw_proteoms/${gff/_longest.gff/.faa}; done
 ```
 
-In 02_proteom
+Rimozione pseudogeni in 02_proteome
 
 ```
 bash /home/PERSONALE/mirko.martini3/Lab_CompGeno/00_practice/99_scripts/pseudogene_find_eliminate.sh/pseudogene_find_eliminate.sh 
 ```
+
+conta degli pseudogeni
 
 ```
 for pseudo in *.txt; do wc -l "$pseudo"; done
 ```
 
 #cambio header
+
 ora sono ultima colonna gff, a noi interessa il ```name```
   
 ```
