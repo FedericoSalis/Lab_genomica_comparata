@@ -17,7 +17,7 @@ Anogam,Culqui,Aedaeg,Aedalb,Sabcya,Anoste -108.3
 Aedaeg,Aedalb -48.0
 ```
 
-Una volta generato questo file (calibration.txt) possiamo avviare la calibrazione temporale linkando nella directory di lavoro il file concatenato presente in /05_OG.Inference_Phylogenomic/04_trimmed/00_single_complete/, con il seguente comando:
+Una volta generato questo file (calibration.txt) possiamo avviare la calibrazione temporale linkando nella directory di lavoro il file concatenato presente in /05_OG.Inference_Phylogenomic/04_trimmed/00_single_complete/, con il seguente comando, il modello (-m) lo troviamo nel file .iqtree:
 
 ```
 iqtree -s conc_species_tree --date calibration.txt --date-tip 0 -o Anoste,Anogam -m Q.INSECT+F+I+R3 -nt 13 --prefix time_tree --date-options "-u 1"
