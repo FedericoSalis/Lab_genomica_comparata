@@ -1,4 +1,4 @@
-#Calibrazione temporale albero
+# Calibrazione temporale albero
 
 Il primo albero è stato costruito in 05_OG.Inference_Phylogenomic, in questa directory lo calibriamo temporalmente.
 Creaiamo un file di testo con i nomi scientifici delle nostre specie e lo carichiamo su iTOL:
