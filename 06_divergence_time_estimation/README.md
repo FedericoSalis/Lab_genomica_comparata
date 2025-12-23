@@ -12,7 +12,7 @@ Sabethes cyaneus
 Anopheles stephensi
 ```
 
-iTOL ci dirà poi i tempi di divergenza stimati. Utilizziamo questi tempi per calibrare temporalmente l'albero precedentemente generato, inserendoli in un file di testo fatto in questo modo:
+iTOL ci dirà poi i tempi di divergenza stimati, nel caso in esame Anopheles stephensi presenta un asterisco sul sito, che indica la mancanza di informazioni per la specie che viene quindi sostituita con un'altra appaertenente allo stesso genere (Anopheles karwari), la divergenza tra le due specie del genere Anopheles non viene quindi presa in considerazione nel prossimo passaggio. Utilizziamo questi tempi per calibrare temporalmente l'albero precedentemente generato, inserendoli in un file di testo fatto in questo modo:
 
 ```
 Anogam,Culqui,Aedaeg,Aedalb,Sabcya,Anoste -108.3
