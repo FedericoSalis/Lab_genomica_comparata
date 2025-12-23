@@ -71,6 +71,7 @@ facciamo partire la costruzione dell'albero
 ```
 iqtree -m TESTNEW -b 100 -s conc_species_tree --prefix species_tree -nt 9
 ```
+Il file .log risultato dall'analisi si trova in questa directory.
 
 ## Allineamento e trimming per studio contrazione/espansione famiglie geniche
 
