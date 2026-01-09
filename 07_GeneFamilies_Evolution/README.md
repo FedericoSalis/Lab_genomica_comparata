@@ -23,10 +23,33 @@ Facciamo 10 replicati tecnici per capire la variabilità di risposta dello strum
 for k in {1..5}; do for n in {1..10}; do mkdir -p 00_1L/${k}K/${n}N; cafe5 -i GeneCount_CAFE.tsv -t timetree.nwk -o 00_1L/${k}K/${n}N -eError_model/Base_error_model.txt -k ${k}; done; done
 ```
 
-
-Per l'analisi con 2 lambda abbiamo bisogno di un file per specificare i lambda, e lo facciamoa apartire dal .nwk, ottenendo qualcosa di simile a:
+Per l'analisi con 2 lambda abbiamo bisogno di un file per specificare i lambda, e lo facciamoa a partire dal .nwk, ottenendo qualcosa del genere:
 
 ```
 ((Anogam:2,Anoste:2):1,(Culqui:2,(Sabcya:1,(Aedalb:1,Aedaeg:1):1):1):1);
+```
+
+## Scelta del modello
+
+All'aumento dei parametri aumenta la likelihood, capiamo se il gioco vale la candela matematicamente. Noi abbiamo però lanciato più >
+
+## Risultati CAFE di interesse
+
+Base_results.txt -> ci informa su quanto fitta il modello, likelihood, Lambda (turnover famiglie nel tempo), Epsilon (porzione famiglie geniche statiche, che non hanno un turnover), lambda massima (treshold valori prodotti), numero di iterazioni
+Base_asr.tre -> numeri in <> sono i numeri dei nodi (numerati da più recente a più antico), i numeri senza <> sono membri di famiglia genica per specie (ricordiamo di considerare gli ortogruppi coime fossero famiglie geniche). Per specie in realtà li sappiamo già in questo file abbiamo però anche il calcolo dei numeri per i nodi interni. Viene inferito stato ancestrale, calcolando prima i modelli migliori. Parte da info distribuzione stato delle tip e ricostruisce lungo il tempo passato. Alcuni nodi hanno asterisco, questo indica una modificazione del numero significativa rispetto al numero precedente, questo ci aiuta poi a provare ad interpretare se correlazione è spuria o meno.
+Base_change.tab -> Tabella con colonne per specie e per nodi interni, contiene la differenza tra numero membri inferiti per un nodo e nodo precedente per ogni famiglia genica.
+Base_clade_results.txt -> numero famiglie significativamente incrementate o decrementate.
+Base_count.tab -> conta pura dei membri per famiglia per specie.
+Base_family_results -> colonne con famiglie, p-value contrazione/espansione, significatività (y/n) (almeno un nodo in cui famiglia è significativamente diversa. 
+
+Stessi file con Gamma al posto che Base per quando viene analizzata con più gamma:
+
+Gamma_results.txt -> famiglie più grandi sono più difficile da far aderire al modello, hanno naturalmente più fallimenti, non le escludiamo dall'analisi ma interpretiamo con attenzione. Parametro alfa (unica vera differenza rispetto a Base per quanto riguarda i parametri) determina forma della gamma distribution, più è grande più sono le evoluzioni lente rispetto alle veloci
+
+
+
+
+```
+
 ```
 
