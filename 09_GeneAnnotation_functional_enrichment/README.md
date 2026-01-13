@@ -18,11 +18,37 @@ Lo script (commentato) per la scelta dell'isoforma più lunga si trova in 99_scr
 Vogliamo togliere "trimmed":
 
 ```
-sed -i 's/trimmed//' longest_protein_OGs.txt 
+sed -i 's/_trimmed//' longest_protein_OGs.txt 
 ```
 
 I nomi delle proteine li otteniamo prendendo il locus (ciò che segue la pipe negli header) e cercandolo su ncbi 
 
 Diamond fa un blast p (proteico) e otteniamo le 25 proteine più simili alla nostra sequenza. Diamond viene attivato con lo script info_gene_didattica.sh. Enrichment con  script R GO_enrichment.R in Script_box.
+
+Dato il file longest otteniamo il GO background
+
+```
+awk -F'\t' '{
+  gsub(/@.*/,"",$1); gsub(/\([^)]*\)/,"",$2); gsub(/\|/,",",$2);
+  split($2, a, ",");
+  for(i in a) if(a[i]!="") seen[$1,a[i]]=1
+}
+END {
+  for(k in seen){
+    split(k, b, SUBSEP)
+    groups[b[1]] = (groups[b[1]] ? groups[b[1]] "," b[2] : b[2])
+  }
+  for(g in groups) print g "\t" groups[g]
+}' <(cut -f1,14 longest_federico.faa.tsv) | grep -v "-" > go_back.tsv
+```
+
+Questo file è stato poi elaborato con R studio, tramite lo script GO_Enrichment_Example.R (Lab_CompGeno/2025/09_GeneAnnotation_functional_enrichment/00_script/GO_Enrichment_Example.R) per ottenere la lista di go term, creiamo la lista revigo:
+
+for i in *; do cut -f1,6 $i >> revigo.tsv; done
+
+questo vile va copiato e incollato sul sito revigo, dimensione lista, p value
+
+
+
 
 ## 
