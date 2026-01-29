@@ -79,7 +79,25 @@ Gamma_results.txt -> famiglie più grandi sono più difficile da far aderire al 
 
 Con lo script extract.sh otteniamo i valori di likelihood, scegliamo quella più bassa (5K/5N) 
 
+## patter di ricerca ortogruppi interessanti 
+
 ```
+(tree) STUDENTI^federico.salis@SGBGA-D142242S:~/Lab_genomica_comparata/07_GeneFamilies_Evolution/00_2L/5K/6N$ grep -E 'Anogam<[^>]*>\*' Gamma_asr.tre \
+| grep -E 'Anoste<[^>]*>\*' \
+| grep -E 'Culqui<[^>]*>\*' \
+| grep -Ev '(Sabcya|Aedalb|Aedaeg)<[^>]*>\*'
+  TREE OG0000047 = ((Anogam<1>*_3:31.4355,Anoste<2>*_10:31.4355)<8>_6:76.8645,(Culqui<3>*_30:80.6431,(Sabcya<4>_5:79.6431,(Aedalb<5>_4:48,Aedaeg<6>_4:48)<11>*_4:31.6431)<10>_6:1)<9>_6:27.6569)<7>_6;
+(tree) STUDENTI^federico.salis@SGBGA-D142242S:~/Lab_genomica_comparata/07_GeneFamilies_Evolution/00_2L/5K/6N$ grep -E 'Anogam<[^>]*>[^*]' Gamma_asr.tre \
+| grep -E 'Anoste<[^>]*>[^*]' \
+| grep -E 'Culqui<[^>]*>[^*]' \
+| grep -E 'Sabcya<[^>]*>\*' \
+| grep -E 'Aedalb<[^>]*>\*' \
+| grep -E 'Aedaeg<[^>]*>\*'
+  TREE OG0000006 = ((Anogam<1>_3:31.4355,Anoste<2>_2:31.4355)<8>*_4:76.8645,(Culqui<3>_18:80.6431,(Sabcya<4>*_57:79.6431,(Aedalb<5>*_41:48,Aedaeg<6>*_1:48)<11>_22:31.6431)<10>_22:1)<9>*_22:27.6569)<7>_17;
+  TREE OG0000016 = ((Anogam<1>_1:31.4355,Anoste<2>_1:31.4355)<8>*_2:76.8645,(Culqui<3>_12:80.6431,(Sabcya<4>*_7:79.6431,(Aedalb<5>*_36:48,Aedaeg<6>*_35:48)<11>*_29:31.6431)<10>_12:1)<9>_12:27.6569)<7>_10;
+  TREE OG0000045 = ((Anogam<1>_5:31.4355,Anoste<2>_5:31.4355)<8>_5:76.8645,(Culqui<3>_11:80.6431,(Sabcya<4>*_4:79.6431,(Aedalb<5>*_29:48,Aedaeg<6>*_3:48)<11>_8:31.6431)<10>_7:1)<9>_7:27.6569)<7>_7;
+  TREE OG0000049 = ((Anogam<1>_2:31.4355,Anoste<2>_1:31.4355)<8>*_2:76.8645,(Culqui<3>_5:80.6431,(Sabcya<4>*_36:79.6431,(Aedalb<5>*_11:48,Aedaeg<6>*_0:48)<11>_7:31.6431)<10>_8:1)<9>_8:27.6569)<7>_7;
+  TREE OG0000296 = ((Anogam<1>_3:31.4355,Anoste<2>_3:31.4355)<8>_3:76.8645,(Culqui<3>_3:80.6431,(Sabcya<4>*_1:79.6431,(Aedalb<5>*_1:48,Aedaeg<6>*_7:48)<11>_3:31.6431)<10>_3:1)<9>_3:27.6569)<7>_3;
 
 ```
 
