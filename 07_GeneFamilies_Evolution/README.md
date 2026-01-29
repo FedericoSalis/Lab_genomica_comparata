@@ -37,7 +37,31 @@ for k in {1..5}; do for n in {1..10}; do mkdir -p 00_2L/${k}K/${n}N; cafe5 -i Ge
 
 ## Scelta del modello
 
-All'aumento dei parametri aumenta la likelihood, capiamo se il gioco vale la candela matematicamente. Noi abbiamo però lanciato più >
+Per gamma = 1 (K1) 
+
+```
+for folder in */; do lnL=$(grep "lnL" ${folder}/Base_results.txt | grep -oE "[0-9]*\.[0-9]*"); L=$(grep "Lambda" ${folder}/Base_results.txt | grep -oE "[0-9]*\.[0-9]*"); E=$(grep "Epsilon" ${folder}/Base_results.txt | grep -oE "[0-9]*\.[0-9]*"); echo -e "$lnL\t$L\t$E" >> sum_results.tsv; done
+```
+
+Per gamma > 1
+
+```
+for i in */; do cd $i; for folder in */; do lnL=$(grep "lnL" ${folder}/Gamma_results.txt | grep -oE "[0-9]+(\.[0-9]+)?"); L=$(grep "Lambda" ${folder}/Gamma_results.txt | grep -oE "[0-9]*\.[0-9]*"); E=$(grep "Epsilon" ${folder}/Gamma_results.txt | grep -oE "[0-9]*\.[0-9]*"); A=$(grep "Alpha" ${folder}/Gamma_results.txt | grep -oE "[0-9]*\.[0-9]*"); echo -e "$lnL\t$L\t$E\t$A" >> sum_results.tsv; done; cd ..; done
+```
+
+pr stessa lambda troviamo la migliore con:
+
+```
+for f in */; do cut -f1 "$f"/sum_results.tsv | sort -n | head -n1; done > all_L.txt
+```
+
+```
+paste --delimiters=$"\t" all_L.txt <(while IFS=$'\t' read -r L k; do echo "2*$k + 2*$L" | bc; done < all_L.txt) <(while IFS=$'\t' read -r L k; do echo "$k*9.26 + 2*$L" | bc; done < all_L.txt) | sort -k4,4n > AIC_BIC.tsv
+```
+
+```
+paste --delimiters=$"\t" L_res.txt <(while IFS=$'\t' read -r L k; do echo "2*$k + 2*$L" | bc; done < L_res.txt) <(while IFS=$'\t' read -r L k; do echo "$k*9.26 + 2*$L" | bc; done < L_res.txt) | sort -k4,4n > AIC_BIC.tsv
+```
 
 ## Risultati CAFE di interesse
 
@@ -53,7 +77,7 @@ Stessi file con Gamma al posto che Base per quando viene analizzata con più gam
 Gamma_results.txt -> famiglie più grandi sono più difficile da far aderire al modello, hanno naturalmente più fallimenti, non le escludiamo dall'analisi ma interpretiamo con attenzione. Parametro alfa (unica vera differenza rispetto a Base per quanto riguarda i parametri) determina forma della gamma distribution, più è grande più sono le evoluzioni lente rispetto alle veloci
 
 
-
+Con lo script extract.sh otteniamo i valori di likelihood, scegliamo quella più bassa (5K/5N) 
 
 ```
 
