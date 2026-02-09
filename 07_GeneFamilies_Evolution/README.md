@@ -77,7 +77,7 @@ Stessi file con Gamma al posto che Base per quando viene analizzata con più gam
 Gamma_results.txt -> famiglie più grandi sono più difficile da far aderire al modello, hanno naturalmente più fallimenti, non le escludiamo dall'analisi ma interpretiamo con attenzione. Parametro alfa (unica vera differenza rispetto a Base per quanto riguarda i parametri) determina forma della gamma distribution, più è grande più sono le evoluzioni lente rispetto alle veloci
 
 
-Con lo script extract.sh otteniamo i valori di likelihood, scegliamo quella più bassa (5K/5N) 
+Con lo script extract.sh otteniamo i valori di likelihood, scegliamo quella più bassa (5K/6N) 
 
 ## patter di ricerca ortogruppi interessanti 
 
