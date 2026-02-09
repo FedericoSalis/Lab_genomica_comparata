@@ -1,2 +1,2 @@
-Anogam,Culqui,Aedaeg,Aedalb,Sabcya.Anoste -108.3
+Anogam,Culqui,Aedaeg,Aedalb,Sabcya,Anoste -108.3
 Aedaeg,Aedalb -48.0
