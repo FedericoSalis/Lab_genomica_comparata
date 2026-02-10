@@ -21,10 +21,10 @@ Di seguito sono specificati i CONDA environments e i relativi software installat
 - treeswift 1.1.45
 
 ### sequence
-Python too high for orthofinder
+Python troppo recente per orthofinder
 - agat 1.4.1
 - blobtools 1.1.1
-- bmge 1.12 (outside all conda environment exist also bmge 2.0)
+- bmge 1.12 (fuori da tutti gli environment è presente la versione bmge 2.0)
 - BUSCO 6.0.0
 - edirect 24.0
 - mafft 7.526
@@ -35,7 +35,7 @@ busco datasets on server:
 
 - arthropoda: /usr/local/share/busco_databases/arthropoda_odb12
 - culicidae: /usr/local/share/busco_databases/culicidae_odb12
-Use $BUSCO/name_db to use a specific db.
+Usare $BUSCO/name_db per utilizzare uno specifico db.
 
 ### assembly
 - python 3.13.5
