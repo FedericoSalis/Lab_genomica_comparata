@@ -1,45 +1,57 @@
 # Annotazione famiglie geniche
- 
-Qui cerchiamo di categorizzare le nostre proteine 
 
-## Allineamento e trimming per studio contrazione/espansione famiglie geniche
+In questa directory l’obiettivo è categorizzare funzionalmente le proteine associate agli alle famiglie geniche di interesse, per interpretare eventuali pattern di espansione/contrazione in chiave biologica.
 
-Ora dobbaimo fare (partendo da 05/02_disco, che contiene i risultati di 01_disco filtrati dai paraloghi) l'allineamento e il trimming di tutti i disco (non gli alberi) per studiare le famiglie geniche, quindi ci servono dati sull'intero genoma, non solo i single complete.
+## Preparazione dataset di partenza
 
-Allineamento:
+Partendo dalla directory 05/02_disco, che contiene gli ortogruppi filtrati dai paraloghi tramite DISCO, eseguiamo l’allineamento e il trimming di tutti gli ortogruppi (non solo i single-copy complete, utili invece per la costruzione dell'albero filogenomico).
+
+Allineamento con MAFFT:
 
 ```
 for file in *faa; do mafft --auto --anysymbol "$file" > ../03_aligned/prova/${file/.faa/_aligned.faa} ; done
 ```
 
-Trimming:
+Trimming con BMGE:
 
 ```
 for file in *; do bmge -i "$file" -t AA -m BLOSUM62 -e 0.5 -g 0.4 -of ../../04_trimmed/prova/${file/_aligned.faa/_trimmed.faa}; done
+```
 
+## Selezione seqenza rappresentativa per ogni famiglia genica
 
-Dobbiamo creare un database identificando un rappresentante per ortogruppo scegliendo la sequenza originale più lunga dopo allineamento e trimming. Sequenze associate a GOterm, li confronto con la variabilità del mio genoma e vedo se ci sono geni significativi legati al tratto biologico che mi interessa. Con bibliografia poi cerchiamo di capire se effettivamente c'è un legame o correlazione spuria. 
-GOterm -> codice numerico (la parte alfa è GO) che determina funzione proteina. Ci sono tre tipi di annotazione (ontologies): funzione molecolare, cellular components (collocazione all'interno della cellula o processo biologico (funzione all'interno di una determinata via)
-Arricchimento avviene invece per singole ontologie. Dato un gruppo di proteine di interesse cerchiamo  i loro Go e confrontiamo loro variabilità con variabilità di intero background, cechiamo quindi quelle che sono evolute in modo significvativamente diverso
-GOterm hanno gerarchicità e vengono divisi in parent e child, ad esempio un parent può essere genericamente collegato ad una via metabolica mentre child è una specifica di questo (ad esempio degradazione di una molecola di quella via.
-KEGG è un database che classifica qualunque proteina ortologa di specie diverse con un codice KO, molto utile quando abbiamo simboli o descrizione diverse per confrontare le ortologie.
+Per l’annotazione funzionale è necessario creare un database non ridondante, selezionando un rappresentante per ciascuna famiglia genica.
+In questo caso viene scelta la sequenza originale più lunga ottenuta da allineamento e trimming precedenti.
 
-Lo script (commentato) per la scelta dell'isoforma più lunga si trova in 99_scripts, quest'ultimo è stato lanciato all'interno di /home/STUDENTI/federico.salis/Lab_genomica_comparata/05_OG.Inference_Phylogenomic/04_trimmed/prova/. Il risultato longest_protein_OGs.txt ha gli header delle sequenze con questa struttura:
+Lo script (commentato) per la scelta dell'isoforma più lunga si trova in 99_scripts ed è stato lanciato all'interno di /home/STUDENTI/federico.salis/Lab_genomica_comparata/05_OG.Inference_Phylogenomic/04_trimmed/prova/.
+Il risultato longest_protein_OGs.txt ha gli header delle sequenze con questa struttura:
 
 ```
 >OG0000000_00_trimmed@Aedalb|LOC134291446
 ```
-Vogliamo togliere "trimmed":
+
+Vogliamo togliere "_trimmed":
 
 ```
 sed -i 's/_trimmed//' longest_protein_OGs.txt 
 ```
 
-I nomi delle proteine li otteniamo prendendo il locus (ciò che segue la pipe negli header) e cercandolo su ncbi 
+## Annotazione funzionale e gene ontology
 
-Diamond fa un blast p (proteico) e otteniamo le 25 proteine più simili alla nostra sequenza. Diamond viene attivato con lo script info_gene_didattica.sh. Enrichment con  script R GO_enrichment.R in Script_box.
+I GO terms sono identificatori numerici che descrivono la funzione delle proteine e sono organizzati in tre ontologie principali:
+- Molecular Function;
+- Cellular Component;
+- Biological process.
 
-Dato il file longest otteniamo il GO background
+I GO terms sono gerarchici (parent/child) e permettono di studiare l’arricchimento funzionale confrontando un insieme di proteine di interesse con un background genomico. L’arricchimento viene calcolato separatamente per ciascuna ontologia.
+
+InterProScan viene utilizzato per assegnare annotazioni funzionali ai nostri ortogruppi:
+
+```
+/home/PERSONALE/dbs/interproscan-5.65-97.0/interproscan.sh -i <LONGEST_PROTEINS_INPUT> -goterms -pa -b <OUTPUT-FILE-BASE> -cpu <N_CPUS>
+```
+
+A partire dal file di output delle sequenze più lunghe annotate, viene costruito il background GO:
 
 ```
 awk -F'\t' '{
@@ -56,13 +68,16 @@ END {
 }' <(cut -f1,14 longest_federico.faa.tsv) | grep -v "-" > go_back.tsv
 ```
 
-Questo file è stato poi elaborato con R studio, tramite lo script GO_Enrichment_Example.R (Lab_CompGeno/2025/09_GeneAnnotation_functional_enrichment/00_script/GO_Enrichment_Example.R) per ottenere la lista di go term, creiamo la lista revigo:
+Questo file è stato poi elaborato insieme ad un altro (contenete la lista dei nomi degli ortogruppi risultati interessanti al termine di 07) tramite lo script GO_enrichment.R, disponibile a questo path:
 
-for i in *; do cut -f1,6 $i >> revigo.tsv; done
+```
+Lab_CompGeno/2025/09_GeneAnnotation_functional_enrichment/00_script/GO_Enrichment.R
+```
 
-questo vile va copiato e incollato sul sito revigo, dimensione lista, p value
+## Diamond
 
+L'annotazione con DIAMOND (blastp) esegue un blast delle nostre sequenze confrontandole con un database di riferimento (NCBI). Per ogni sequenza di riferimento restituisce una lista delle 25 proteine più simili presenti nel database, fornendo, quando disponibili anche le descrizioni funzionali per le proteine caratterizzate.
 
-
-
-## 
+```
+diamond makedb --in /var/local/diamond_db/nr.gz --db ./nr_diamond
+```
