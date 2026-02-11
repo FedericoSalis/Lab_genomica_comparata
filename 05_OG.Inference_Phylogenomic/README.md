@@ -3,7 +3,7 @@ I genomi sono stati scaricati da NCBI, puliti con BUSCO (in realtà in questa pi
 
 ## Paralog filtering
 
-L'analisi con orthofinder cerca gruppi di ortologia, che comprendono anche i paraloghi. Basandosi sulle sequenze, DISCO aumenta i gruppi di ortologhi e allo stesso tempo rimuovee i paraloghi (altri programmi fanno lo stesso a partire dagli alberi). Il risultato di DISCO sono alberi più piccoli e puliti, ciascuno corrispondente a un singolo ortogruppo, anche se non tutte le specie sono necessariamente rappresentate in ogni gruppo (single copy non complete).
+L'analisi con orthofinder cerca gruppi di ortologia, che comprendono anche i paraloghi. Basandosi sulle sequenze, DISCO aumenta i gruppi di ortologhi e allo stesso tempo rimuove i paraloghi (altri programmi fanno lo stesso a partire dagli alberi). Il risultato di DISCO sono alberi più piccoli e puliti, ciascuno corrispondente a un singolo ortogruppo, anche se non tutte le specie sono necessariamente rappresentate in ogni gruppo (single copy non complete).
 
 Il file Statistic overall contiene le informazioni riassuntive sulle nostre specie (es. numero specie, numero geni, numero geni in ortogruppi, ecc...)
 
@@ -73,5 +73,4 @@ Infine costruiamo l'albero con IQ-TREE
 
 ```
 iqtree -m TESTNEW -b 100 -s conc_species_tree --prefix species_tree -nt 9
-```
 ```
