@@ -1,8 +1,9 @@
 # Analisi evoluzione delle famiglie geniche
 
+
 CAFE usa un modello di birth and death per stimare la contrazione/espansione famiglie geniche. Per avviarlo ci serve un time tree in formato .nwk e di una tabella (Orthogroups.GeneCount.tsv, presente tra i risultati di Orthofinder, va prima modificata però)
-Il nostro albero è in formato .nex, lo trasformiamo con iTOL, caricando il file .nex, esportandolo come .nwk e facendo copia e incolla del risultato in un file (timetree.nwk).
-La tabella di otogruppi è presente tra i risultati di Orthofinder (Orthogroups.GeneCount.tsv), va però prima modificata per rimuovere l'ultima colonna, che non ci interessa:
+Il nostro albero è in formato .nex, lo trasformiamo su timtree.org, caricando il file .nex, esportandolo come .nwk e facendo copia e incolla del risultato in un file (timetree.nwk).
+La tabella con gli ortogruppi è presente tra i risultati di Orthofinder (Orthogroups.GeneCount.tsv), va però prima modificata per rimuovere l'ultima colonna, che non ci interessa:
 
 ```
 sed $'s/^/NONE\t/g' Orthogroups.GeneCount.tsv | rev | cut -f 2- | rev > ../../../../07_GeneFamilies_Evolution/GeneCount_CAFE.tsv
