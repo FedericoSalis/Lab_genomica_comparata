@@ -81,3 +81,9 @@ L'annotazione con DIAMOND (blastp) esegue un blast delle nostre sequenze confron
 ```
 diamond makedb --in /var/local/diamond_db/nr.gz --db ./nr_diamond
 ```
+## HHpred, HMMER e PANNZER2
+
+Altre analisi sono state effettuate con HHpred, HMMER e PANNZER2 per avere più informazione sulle sequenze ritenute interessanti, di seguito i link ai vari siti web:
+- HHpred: https://toolkit.tuebingen.mpg.de
+- HMMER: https://www.ebi.ac.uk
+- PANNZER2: http://ekhidna2.biocenter.helsinki.fi/sanspanz/
